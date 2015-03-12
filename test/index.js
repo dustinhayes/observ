@@ -36,6 +36,31 @@ test("observable change", function (assert) {
     assert.end()
 })
 
+test("remove listener", function (assert) {
+    var v = Observable("init value")
+    var values = []
+
+    var l1 = v(function onchange(newValue) {
+        values.push("l1: " + newValue)
+    })
+
+    var l2 = v(function onchange(newValue) {
+        values.push("l2: " + newValue)
+    })
+
+    var l3 = v(function onchange(newValue) {
+        values.push("l3: " + newValue)
+    })
+
+    l2()
+
+    v.set("new value")
+
+    assert.deepEqual(values, ["l1: new value", "l3: new value"])
+
+    assert.end()
+})
+
 test("computed observable", function (assert) {
     var v1 = Observable("one")
     var v2 = Observable("two")

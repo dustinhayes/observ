@@ -19,15 +19,10 @@ function Observable(value) {
             return value
         }
 
-        listeners.push(listener)
+        var index = listeners.push(listener) - 1
 
         return function remove() {
-            for (var i = 0, len = listeners.length; i < len; i++) {
-                if (listeners[i] === listener) {
-                    listeners.splice(i, 1)
-                    break
-                }
-            }
+            listeners.splice(index, 1)
         }
     }
 }
